@@ -2,7 +2,7 @@ import { getProjects } from "@/lib/notion";
 import { BiliPlayer } from "@/components/BiliPlayer";
 import { Reveal } from "@/components/Reveal";
 
-export const revalidate = 60; // 每 60 秒重新读取 Notion
+export const dynamic = "force-static"; // 构建时抓取一次 Notion，生成静态页
 
 export default async function Home() {
   const projects = await getProjects();
