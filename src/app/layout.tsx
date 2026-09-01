@@ -18,6 +18,7 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   title: "作品集 — Portfolio",
   description: "个人视频作品集",
+  referrer: "no-referrer", // 绕过 B站图片防盗链，使封面正常显示
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

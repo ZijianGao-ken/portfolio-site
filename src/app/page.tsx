@@ -1,11 +1,13 @@
-import { getProjects } from "@/lib/notion";
+import { getProjects, getSettings } from "@/lib/notion";
 import { BiliPlayer } from "@/components/BiliPlayer";
+import { Gallery } from "@/components/Gallery";
 import { Reveal } from "@/components/Reveal";
 
 export const dynamic = "force-static"; // 构建时抓取一次 Notion，生成静态页
 
 export default async function Home() {
   const projects = await getProjects();
+  const settings = await getSettings();
 
   return (
     <main className="w-full">
@@ -51,7 +53,7 @@ export default async function Home() {
       {/* 作品列表 */}
       <section id="work" className="mx-auto max-w-6xl px-6 pb-32 md:px-10">
         <div className="flex flex-col gap-28 md:gap-40">
-          {projects.map((project, i) => (
+          {projects.map((project) => (
             <Reveal key={project.id}>
               <article className="group">
                 <div className="mb-6 flex items-end justify-between">
@@ -64,13 +66,19 @@ export default async function Home() {
                     </p>
                   </div>
                   <span className="font-display text-lg text-muted">
-                    {String(i + 1).padStart(2, "0")} / {project.year}
+                    {project.year}
                   </span>
                 </div>
-                <BiliPlayer project={project} />
-                <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted">
-                  {project.description}
-                </p>
+                {project.description && (
+                  <p className="mb-6 max-w-2xl text-base leading-relaxed text-muted">
+                    {project.description}
+                  </p>
+                )}
+                {project.bvid ? (
+                  <BiliPlayer project={project} />
+                ) : (
+                  <Gallery project={project} />
+                )}
               </article>
             </Reveal>
           ))}
@@ -85,13 +93,13 @@ export default async function Home() {
               关于我
             </h2>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-              技术美术，专注 3C 动作系统。技术储备偏重跑酷、射击与动作游戏，长期打磨运动手感、平台跳跃机关交互与多模态移动状态切换。
+              {settings.about}
             </p>
             <a
-              href="mailto:hello@example.com"
+              href={`mailto:${settings.email}`}
               className="mt-8 inline-block border-b border-accent pb-1 text-lg text-accent transition-opacity hover:opacity-70"
             >
-              hello@example.com
+              {settings.email}
             </a>
           </Reveal>
         </div>

@@ -8,6 +8,22 @@ export type Project = {
   bvid: string;
   /** 封面图 URL，可为空（空则显示视频首帧占位） */
   cover: string;
+  /** 要展示的分 P 序号列表，如 [1, 3]。为空则只播第 1 P */
+  pages: number[];
+  /** 纯图片作品的图集（本地路径）。有 bvid 时忽略 */
+  images: string[];
+};
+
+/** 站点级文字设置（关于我、联系邮箱），存在 Notion 的「站点设置」行 */
+export type SiteSettings = {
+  about: string;
+  email: string;
+};
+
+export const defaultSettings: SiteSettings = {
+  about:
+    "技术美术，专注 3C 动作系统。技术储备偏重跑酷、射击与动作游戏，长期打磨运动手感、平台跳跃机关交互与多模态移动状态切换。",
+  email: "hello@example.com",
 };
 
 /** 示例作品数据 —— 未配置 Notion 时用于本地预览 */
@@ -22,6 +38,8 @@ export const sampleProjects: Project[] = [
     bvid: "BV1GJ411x7h7",
     cover:
       "https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1600&auto=format&fit=crop",
+    pages: [],
+    images: [],
   },
   {
     id: "2",
@@ -32,6 +50,8 @@ export const sampleProjects: Project[] = [
     bvid: "BV1GJ411x7h7",
     cover:
       "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1600&auto=format&fit=crop",
+    pages: [],
+    images: [],
   },
   {
     id: "3",
@@ -42,5 +62,7 @@ export const sampleProjects: Project[] = [
     bvid: "BV1GJ411x7h7",
     cover:
       "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?q=80&w=1600&auto=format&fit=crop",
+    pages: [],
+    images: [],
   },
 ];
